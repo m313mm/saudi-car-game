@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لعبة السيارات السعودية</title>
+<style>body{margin:0;background:#111;color:#fff;font-family:Arial;text-align:center}canvas{background:#222;display:block;margin:10px auto;border:3px solid gold}button{padding:12px;margin:5px;border-radius:10px;border:0;font-weight:bold}.car{background:#222;padding:10px;margin:5px;border-radius:10px;width:120px;display:inline-block}</style>
+</head>
+<body>
+<h1>🚔 لعبة السيارات السعودية</h1>
+<p>💰 فلوسك: <span id="money">50000</span> | 🚗 سيارتك: <span id="mycar">كامري</span></p>
+<canvas id="game" width="350" height="450"></canvas>
+<p>🎮 حرك باللمس: اسحب يمين ويسار - الشرطة تطاردك!</p>
+<button onclick="buy()">🛒 اشتري سيارة</button>
+<button onclick="barber()">💈 محل حلاق</button>
+<button onclick="weapon()">🔫 محل أسلحة</button>
+<div id="shop"></div>
+<script>
+let money=50000,x=175,policeY=-50;
+let cars=["كامري","هايلوكس","لاندكروزر","باترول","جي كلاس","رنج روفر","لمبورجيني","فيراري","بورشه","موستنج","تاهو","يوكن","كورولا","سوناتا","النترا","كابرس","كراون","شاص","دفندر","BMW M4"];
+let c=document.getElementById("game"),ctx=c.getContext("2d");
+function draw(){ctx.fillStyle="#333";ctx.fillRect(0,0,350,450);ctx.fillStyle="#555";ctx.fillRect(50,0,250,450);ctx.fillStyle="yellow";ctx.fillRect(170,0,5,450);ctx.fillStyle="red";ctx.fillRect(x-20,350,40,60);ctx.fillStyle="#fff";ctx.fillText("🚗",x-15,390);ctx.fillStyle="blue";ctx.fillRect(x-20,policeY,40,60);ctx.fillStyle="#fff";ctx.fillText("🚓",x-15,policeY+35);policeY+=3;if(policeY>450){policeY=-50;x=Math.random()*250+50;money+=500;document.getElementById("money").innerText=money;}requestAnimationFrame(draw);}draw();
+c.addEventListener("touchmove",e=>{x=e.touches[0].clientX-c.getBoundingClientRect().left;});
+function buy(){let car=cars[Math.floor(Math.random()*cars.length)];document.getElementById("mycar").innerText=car;alert("مبروك! اشتريت "+car);}
+function barber(){alert("💈 محل الحلاق: غيرت قصة شعرك! شخصيتك صارت واقعية أكثر");}
+function weapon(){alert("🔫 محل الأسلحة: اشتريت سلاح!");}
+let s=document.getElementById("shop");for(let i=0;i<100;i++){let d=document.createElement("div");d.className="car";d.innerHTML="🚗 سيارة "+(i+1)+"<br>"+cars[i%cars.length]+"<br><button onclick='alert(\"اشتريت سيارة رقم "+(i+1)+"\")'>شراء</button>";s.appendChild(d);}
+</script>
+</body></html>
